@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cortecs"
+  short_description: "Build and manage integrations with Cortecs"
+  default_prompt: "Use $cortecs to integrate this project with Cortecs using its existing stack."

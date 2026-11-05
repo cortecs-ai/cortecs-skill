@@ -1,0 +1,15 @@
+{
+  "$schema": "https://code.claude.com/schemas/marketplace.json",
+  "name": "cortecs",
+  "description": "Skills for building with the Cortecs AI gateway.",
+  "owner": {
+    "name": "Cortecs"
+  },
+  "plugins": [
+    {
+      "name": "cortecs",
+      "source": "./",
+      "description": "Skills for building with the Cortecs AI gateway."
+    }
+  ]
+}

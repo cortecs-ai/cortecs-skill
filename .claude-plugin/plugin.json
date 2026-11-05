@@ -1,0 +1,10 @@
+{
+  "name": "cortecs",
+  "version": "0.1.0",
+  "description": "Build with Cortecs: API integration, model discovery, routing, multimodal workflows, and project administration.",
+  "author": {
+    "name": "Cortecs"
+  },
+  "homepage": "https://cortecs.ai",
+  "repository": "https://github.com/cortecs-ai/cortecs-skill"
+}
