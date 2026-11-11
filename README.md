@@ -10,6 +10,12 @@ Use Node.js 22.20 or later, as required by the current Skills CLI.
 npx skills add cortecs-ai/cortecs-skill --skill cortecs
 ```
 
+With Bun, use `bunx` in place of `npx` in any command here:
+
+```bash
+bunx skills add cortecs-ai/cortecs-skill --skill cortecs
+```
+
 Choose your agent when prompted. Installation is project-scoped by default; add `-g` for user-wide installation or `-a claude-code` / `-a codex` to select an agent.
 
 Preview available skills:
@@ -83,7 +89,7 @@ python3 tests/validate.py
 npx skills add . --list
 ```
 
-The offline check validates plugin metadata and marketplace paths, local Markdown links, and example JSON, Python, shell, and TOML syntax. It makes no API calls. For installer verification, install the local checkout into a temporary project and inspect the installed reference files.
+The offline check validates plugin metadata and marketplace paths, local Markdown links, and example JSON, Python, shell, and TOML syntax. JavaScript and TypeScript examples are checked with Bun when it is installed; without Bun, Node checks JavaScript only. It makes no API calls. For installer verification, install the local checkout into a temporary project and inspect the installed reference files.
 
 With Claude Code installed, validate both native manifests:
 
