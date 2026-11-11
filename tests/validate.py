@@ -4,12 +4,29 @@ import ast
 import json
 from pathlib import Path
 import re
+import shutil
 import subprocess
+import tempfile
 import tomllib
 from urllib.parse import unquote, urlsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def check_script(path, code, suffix):
+    """Syntax-check a JS/TS block with Bun (JS and TS) or Node (JS only); skip if neither exists."""
+    if shutil.which("bun"):
+        command = ["bun", "build", "--no-bundle"]
+    elif shutil.which("node") and suffix == ".mjs":
+        command = ["node", "--check"]
+    else:
+        return
+    with tempfile.NamedTemporaryFile("w", suffix=suffix) as script:
+        script.write(code)
+        script.flush()
+        result = subprocess.run([*command, script.name], text=True, capture_output=True)
+    assert result.returncode == 0, f"{path}: {result.stderr}"
 
 
 def validate_markdown(path):
@@ -26,6 +43,8 @@ def validate_markdown(path):
             assert result.returncode == 0, f"{path}: {result.stderr}"
         elif language == "toml":
             tomllib.loads(code)
+        elif language in {"javascript", "typescript"}:
+            check_script(path, code, ".mjs" if language == "javascript" else ".ts")
 
     prose = re.sub(r"^```[^\n]*\n.*?^```\s*$", "", text, flags=re.M | re.S)
     for target in re.findall(r"\[[^\]]+\]\(([^)]+)\)", prose):
@@ -46,8 +65,8 @@ def main():
         assert re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", manifest["name"]), "Invalid plugin name"
         assert re.fullmatch(r"\d+\.\d+\.\d+", manifest["version"]), "Invalid plugin version"
         assert manifest["description"] and manifest["author"]["name"], "Missing plugin metadata"
-    assert claude["name"] == cursor["name"], "Plugin names differ"
-    assert claude["version"] == cursor["version"], "Plugin versions differ"
+    assert claude == cursor, "Claude and Cursor plugin manifests differ"
+    assert claude.get("license") and (ROOT / "LICENSE").is_file(), "Missing license"
     assert marketplace["name"] and marketplace["owner"]["name"], "Missing marketplace metadata"
     for plugin in marketplace["plugins"]:
         source = (ROOT / plugin["source"]).resolve()

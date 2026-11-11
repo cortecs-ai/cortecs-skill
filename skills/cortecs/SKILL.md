@@ -1,6 +1,6 @@
 ---
 name: cortecs
-description: Integrate, migrate to, configure, and troubleshoot Cortecs (cortecs.ai), the European AI gateway. Use for Cortecs API requests, model selection, routing and fallbacks, multimodal or retrieval workloads, SDK and coding-agent setup, project administration, and EU sovereignty or zero data retention controls.
+description: Integrate, migrate to, configure, and troubleshoot Cortecs (cortecs.ai), the European AI gateway. Use when code or config mentions api.cortecs.ai or CORTECS_API_KEY, when migrating from OpenAI, OpenRouter, or EUrouter to Cortecs, and for Cortecs API requests, model selection, routing and fallbacks, multimodal or retrieval workloads, SDK and coding-agent setup, project administration, and EU sovereignty or zero data retention controls.
 ---
 
 # Cortecs

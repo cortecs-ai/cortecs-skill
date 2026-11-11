@@ -6,5 +6,6 @@
     "name": "Cortecs"
   },
   "homepage": "https://cortecs.ai",
-  "repository": "https://github.com/cortecs-ai/cortecs-skill"
+  "repository": "https://github.com/cortecs-ai/cortecs-skill",
+  "license": "MIT"
 }

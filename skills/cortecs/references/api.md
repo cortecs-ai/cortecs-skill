@@ -79,25 +79,22 @@ Use the existing `openai` package when installed:
 ```javascript
 import OpenAI from "openai";
 
-const client = new OpenAI({
-  baseURL: "https://api.cortecs.ai/v1",
-  apiKey: process.env.CORTECS_API_KEY,
-});
+const apiKey = process.env.CORTECS_API_KEY;
+const model = process.env.CORTECS_MODEL;
+if (!apiKey || !model) throw new Error("Set CORTECS_API_KEY and CORTECS_MODEL");
+
+const client = new OpenAI({ baseURL: "https://api.cortecs.ai/v1", apiKey });
 const response = await client.responses.create({
-  model: process.env.CORTECS_MODEL,
+  model,
   input: "Explain semantic search in one sentence.",
   max_output_tokens: 128,
 });
 console.log(response.output_text);
 ```
 
-For per-request routing outside the SDK's typed surface, use raw `fetch` instead of pretending Python's `extra_body` exists in JavaScript:
+The typed JavaScript SDK does not expose Cortecs routing fields. For per-request routing, use raw `fetch` instead of pretending Python's `extra_body` exists in JavaScript (same `apiKey` and `model` as above):
 
 ```javascript
-const apiKey = process.env.CORTECS_API_KEY;
-const model = process.env.CORTECS_MODEL;
-if (!apiKey || !model) throw new Error("Set CORTECS_API_KEY and CORTECS_MODEL");
-
 const response = await fetch("https://api.cortecs.ai/v1/chat/completions", {
   method: "POST",
   headers: {
